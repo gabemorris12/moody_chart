@@ -1,11 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Some customization
+save_pdf = True
+laminar_line_color = 'black'
+relative_roughness_color = 'maroon'
+interval_arrows_color = 'deepskyblue'
+
 # Choose which relative roughness lines to plot and the major and minor ticks for the friction factor axis
 relative_roughness = [0.00001, 0.00005, 0.0001, 0.0002, 0.0004, 0.0006, 0.0008, 0.001, 0.002, 0.004, 0.006, 0.008, 0.01,
                       0.015, 0.02, 0.03, 0.04, 0.05]
 major_ticks = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
-minor_ticks = [0.008, 0.009, 0.015]
+minor_ticks = [0.008, 0.009, 0.0125, 0.015, 0.025]
 
 fig, ax = plt.subplots()  # You can do more with figure and axis object
 
@@ -14,16 +20,16 @@ Re_lam = np.linspace(64/0.1, 2300, 1000)
 Re_transition = np.linspace(2300, 10_000, 1000)
 ax.set_xscale('log')
 ax.set_yscale('log')
-ax.plot(Re_lam, 64/Re_lam, color='black')
-ax.plot(Re_transition, 64/Re_transition, color='black', ls='--')
+ax.plot(Re_lam, 64/Re_lam, color=laminar_line_color)
+ax.plot(Re_transition, 64/Re_transition, color=laminar_line_color, ls='--')
 
 # Plotting the relative roughness lines
 Re_turbulent = np.linspace(10_000, 1e8, 100_000)
 for r in relative_roughness:
     f = (1/(-1.8*np.log10((r/3.7)**1.11 + 6.9/Re_turbulent)))**2  # Haaland Equation
     f_trans = (1/(-1.8*np.log10((r/3.7)**1.11 + 6.9/Re_transition)))**2
-    ax.plot(Re_turbulent, f, color='maroon')
-    ax.plot(Re_transition, f_trans, color='maroon', ls='--')
+    ax.plot(Re_turbulent, f, color=relative_roughness_color)
+    ax.plot(Re_transition, f_trans, color=relative_roughness_color, ls='--')
     if r != 0.001:  # This is just to fix the issue with the 0.001 being too close to 0.0008
         ax.annotate(f'{r:.5f}'.rstrip('0'), (1.2e8, np.min(f)), va='center',
                     bbox=dict(facecolor='white', pad=0, edgecolor='white'))
@@ -33,7 +39,7 @@ for r in relative_roughness:
 
 # Make the laminar, transition, and turbulent intervals
 # For more details on annotate: https://matplotlib.org/1.5.3/users/annotations_guide.html
-arrow_style = dict(arrowstyle='<|-|>', connectionstyle='arc3', color='deepskyblue', lw=1.5,
+arrow_style = dict(arrowstyle='<|-|>', connectionstyle='arc3', color=interval_arrows_color, lw=1.5,
                    shrinkB=0, shrinkA=0)  # ShrinkA and shrinkB are set to connect, meaning no space.
 bbox_parameter = dict(facecolor='white', edgecolor='white', pad=0)
 vertical = 0.085
@@ -61,5 +67,8 @@ ax.set_xlabel(r"Reynold's Number ($Re=\frac{U_mD}{\nu}$)")
 ax.set_title('Moody Chart')
 
 fig.set_size_inches(8.5, 11)
-# fig.savefig('scratch.pdf')
+
+if save_pdf:
+    fig.savefig('moody_chart.pdf')
+
 plt.show()
