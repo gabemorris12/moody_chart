@@ -1,5 +1,5 @@
 # Moody Chart
-The purpose of this is to be able to create a custom moody chart to print out on a PDF. See `moody_chart.pdf` for the
+The purpose of this is to be able to create a custom moody chart to print out on a PDF. See the PDF's for the
 results. The reason why I did this was because I wanted a chart that stretched across an entire page. 
 
 Adjust the parameters at the beginning of `moody_chart.py` to your liking. 
