@@ -8,7 +8,7 @@ relative_roughness_color = 'maroon'
 interval_arrows_color = 'deepskyblue'
 
 # Choose which relative roughness lines to plot and the major and minor ticks for the friction factor axis
-relative_roughness = [0.00001, 0.00005, 0.0001, 0.0002, 0.0004, 0.0006, 0.0008, 0.001, 0.002, 0.004, 0.006, 0.008, 0.01,
+relative_roughness = [0, 0.00001, 0.00005, 0.0001, 0.0002, 0.0004, 0.0006, 0.0008, 0.001, 0.002, 0.004, 0.006, 0.008, 0.01,
                       0.015, 0.02, 0.03, 0.04, 0.05]
 major_ticks = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
 minor_ticks = [0.008, 0.009, 0.0125, 0.015, 0.025]
@@ -42,7 +42,7 @@ for r in relative_roughness:
 arrow_style = dict(arrowstyle='<|-|>', connectionstyle='arc3', color=interval_arrows_color, lw=1.5,
                    shrinkB=0, shrinkA=0)  # ShrinkA and shrinkB are set to connect, meaning no space.
 bbox_parameter = dict(facecolor='white', edgecolor='white', pad=0)
-vertical = 0.085
+vertical = 0.088
 ax.annotate('', xy=(64/0.1, vertical), xytext=(2300, vertical), arrowprops=arrow_style)
 ax.annotate('', xy=(2300, vertical), xytext=(10_000, vertical), arrowprops=arrow_style)
 ax.annotate('', xy=(10_000, vertical), xytext=(1e8, vertical), arrowprops=arrow_style)
@@ -60,6 +60,7 @@ ax.set_yticks(ticks=minor_ticks, labels=[str(i) for i in minor_ticks], minor=Tru
 ax.grid(which='minor', ls='--')
 ax.grid(which='major')
 ax.set_xlim(np.min(Re_lam), 4e8)
+ax.set_ylim(0.007, 0.12)
 ax.legend([ax.lines[0], ax.lines[2]],
           [r'Laminar Flow Line ($f=64/Re$)', r'Relative Roughness Lines ($\epsilon/D$)'], ncol=2)
 ax.set_ylabel(r'Friction Factor ($f=-\frac{\partial P}{\partial x}\frac{D}{\rho {U_m}^2/2}$)')
