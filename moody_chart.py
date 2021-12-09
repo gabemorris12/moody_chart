@@ -67,9 +67,11 @@ ax.set_ylabel(r'Friction Factor ($f=-\frac{\partial P}{\partial x}\frac{D}{\rho 
 ax.set_xlabel(r"Reynold's Number ($Re=\frac{U_mD}{\nu}$)")
 ax.set_title('Moody Chart')
 
-fig.set_size_inches(8.5, 11)
 
 if save_pdf:
-    fig.savefig('moody_chart.pdf')
+    fig.set_size_inches(11, 8.5)
+    fig.savefig('horizontal_moody_chart.pdf')
+    fig.set_size_inches(8.5, 11)
+    fig.savefig('vertical_moody_chart.pdf')
 
 plt.show()
