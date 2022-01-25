@@ -8,5 +8,4 @@ Adjust the parameters at the beginning of `moody_chart.py` to your liking.
 There is no use of numerical solvers unlike some other moody charts I've seen. Instead, I used the Haaland equation to
 gather data for the relative roughness lines. Historically, the Colebrook equation (a more complex implicit
 relationship) is used to calculate the desired property; however, plotting the Colebrook equation on top of the Haaland
-equation on a graph would be nearly indistinguishable. In fact, I think I'll never use this chart ever because I could
-just program my TI-84 to get a more precise solution.
+equation on a graph would be nearly indistinguishable.
