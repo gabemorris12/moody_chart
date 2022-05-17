@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.rcParams['text.usetex'] = True
+
 # Some customization
 save_pdf = True
 laminar_line_color = 'black'
@@ -8,8 +10,8 @@ relative_roughness_color = 'maroon'
 interval_arrows_color = 'deepskyblue'
 
 # Choose which relative roughness lines to plot and the major and minor ticks for the friction factor axis
-relative_roughness = [0, 0.00001, 0.00005, 0.0001, 0.0002, 0.0004, 0.0006, 0.0008, 0.001, 0.002, 0.004, 0.006, 0.008, 0.01,
-                      0.015, 0.02, 0.03, 0.04, 0.05]
+relative_roughness = [0, 0.00001, 0.00005, 0.0001, 0.0002, 0.0004, 0.0006, 0.0008, 0.001, 0.002, 0.004, 0.006, 0.008,
+                      0.01, 0.015, 0.02, 0.03, 0.04, 0.05]
 major_ticks = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
 minor_ticks = [0.008, 0.009, 0.0125, 0.015, 0.025]
 
@@ -63,8 +65,8 @@ ax.set_xlim(np.min(Re_lam), 4e8)
 ax.set_ylim(0.007, 0.12)
 fig.legend([ax.lines[0], ax.lines[2]],
            [r'Laminar Flow Line ($f=64/Re$)', r'Relative Roughness Lines ($\epsilon/D$)'], ncol=2, loc='upper center')
-ax.set_ylabel(r'Friction Factor ($f=-\frac{\partial P}{\partial x}\frac{D}{\rho {U_m}^2/2}$)')
-ax.set_xlabel(r"Reynold's Number ($Re=\frac{U_mD}{\nu}$)")
+ax.set_ylabel(r'Friction Factor ($f=-\frac{\partial P}{\partial x}\frac{D}{\rho {V}^2/2}$)')
+ax.set_xlabel(r"Reynold's Number ($Re=\frac{\rho VD}{\mu}$)")
 ax.set_title('Moody Chart')
 
 if save_pdf:
