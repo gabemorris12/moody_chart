@@ -1,5 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.optimize import fsolve
+
+import warnings
+warnings.filterwarnings('ignore', category=RuntimeWarning)
 
 plt.rcParams['text.usetex'] = True
 
@@ -27,8 +31,9 @@ ax.plot(Re_critical, 64/Re_critical, color=laminar_line_color, ls='--')
 
 # Plotting the relative roughness lines
 Re_turbulent = np.linspace(4500, 1e8, 100_000)
+f_lamb = lambda Re_, r_: 0.3086/((np.log10(6.9/Re_ + (r_/3.7)**1.11))**2)  # Haaland Equation (p. 10)
 for r in relative_roughness:
-    f = 0.3086/((np.log10(6.9/Re_turbulent + (r/3.7)**1.11))**2)  # Haaland Equation (p. 10)
+    f = f_lamb(Re_turbulent, r)
     f_trans = (1/(-1.8*np.log10((r/3.7)**1.11 + 6.9/Re_critical)))**2
     ax.plot(Re_turbulent, f, color=relative_roughness_color)
     ax.plot(Re_critical, f_trans, color=relative_roughness_color, ls='--')
@@ -38,6 +43,21 @@ for r in relative_roughness:
     else:
         ax.annotate(f'{r:.5f}'.rstrip('0'), (1.2e8, np.min(f)),
                     bbox=dict(facecolor='white', pad=0, edgecolor='white'))
+
+# Plotting the transitional line
+f_T = lambda r_: 0.3086/(1.11*np.log10(r_/3.7))**2
+Re_lamb = lambda Re, r_: 1.011*f_T(r_) - f_lamb(Re, r_)
+Re_trans, f_values = [], []
+guess = 1e7
+for r in np.linspace(relative_roughness[1] - relative_roughness[1]/3, relative_roughness[-1] + relative_roughness[-1]/3,
+                     100_000):
+    Re_tran = fsolve(Re_lamb, np.array([guess, ]), args=(r,))[0]
+    guess = Re_tran
+    if Re_tran > 10**8:
+        continue
+    Re_trans.append(Re_tran)
+    f_values.append(1.011*f_T(r))
+ax.plot(Re_trans, f_values, color='darkgrey', ls='-.')
 
 # Make the laminar, critical, and turbulent intervals
 # For more details on annotate: https://matplotlib.org/1.5.3/users/annotations_guide.html
@@ -63,8 +83,9 @@ ax.grid(which='minor', ls='--')
 ax.grid(which='major')
 ax.set_xlim(np.min(Re_lam), 4e8)
 ax.set_ylim(0.007, 0.12)
-fig.legend([ax.lines[0], ax.lines[2]],
-           [r'Laminar Flow Line ($f=64/Re$)', r'Relative Roughness Lines ($\epsilon/D$)'], ncol=2, loc='upper center')
+fig.legend([ax.lines[0], ax.lines[2], ax.lines[-1]],
+           [r'Laminar Flow Line ($f=64/Re$)', r'Relative Roughness Lines ($\epsilon/D$)', r'Transition Line'], ncol=3,
+           loc='upper center')
 ax.set_ylabel(r'Friction Factor ($f=-\frac{\partial P}{\partial x}\frac{D}{\rho {V}^2/2}$)')
 ax.set_xlabel(r"Reynold's Number ($Re=\frac{\rho VD}{\mu}$)")
 ax.set_title('Moody Chart')
