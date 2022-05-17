@@ -5,6 +5,9 @@ from scipy.optimize import fsolve
 import warnings
 warnings.filterwarnings('ignore', category=RuntimeWarning)
 
+import warnings
+warnings.filterwarnings('ignore', category=RuntimeWarning)
+
 plt.rcParams['text.usetex'] = True
 
 # Some customization
@@ -81,14 +84,15 @@ ax.set_yticks(ticks=major_ticks, labels=[str(i) for i in major_ticks])
 ax.set_yticks(ticks=minor_ticks, labels=[str(i) for i in minor_ticks], minor=True)
 ax.grid(which='minor', ls='--')
 ax.grid(which='major')
-ax.set_xlim(np.min(Re_lam), 4e8)
-ax.set_ylim(0.007, 0.12)
+ax.set_xlim(np.min(Re_lam), 2.5e8)
+ax.set_ylim(0.007, 0.1)
 fig.legend([ax.lines[0], ax.lines[2], ax.lines[-1]],
            [r'Laminar Flow Line ($f=64/Re$)', r'Relative Roughness Lines ($\epsilon/D$)', r'Transition Line'], ncol=3,
            loc='upper center')
 ax.set_ylabel(r'Friction Factor ($f=-\frac{\partial P}{\partial x}\frac{D}{\rho {V}^2/2}$)')
 ax.set_xlabel(r"Reynold's Number ($Re=\frac{\rho VD}{\mu}$)")
 ax.set_title('Moody Chart')
+fig.tight_layout()
 
 if save_pdf:
     fig.set_size_inches(8.5, 11)
