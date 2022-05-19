@@ -78,13 +78,18 @@ ax.annotate('Critical', xy=(np.sqrt(2000*4500), vertical + 0.002), va='bottom', 
 ax.annotate('Turbulent', xy=(np.sqrt(4500*1e8), vertical + 0.002), va='bottom', ha='center', size='small',
             bbox=bbox_parameter)
 
+# Adding the roughness table
+table = r"""\begin{tabular}{c|c} \bf{Material} & \bf{$\epsilon$ (ft)} \\\hline Drawn Tubing & 0.000005 \\\hline Commercial Steel or Wrought Iron & 0.00015 \\\hline Asphalted Cast Iron & 0.0004 \\\hline Galvanized Iron & 0.0005 \\\hline Wood Stave & 0.0006-0.003 \\\hline Cast Iron & 0.00085 \\\hline Concrete & 0.001-0.01 \\\hline Riveted Steel & 0.003-0.03 \end{tabular}"""
+
+ax.annotate(table, xy=(1.5e4, 0.0075), ha='center', va='bottom', bbox=dict(facecolor='white'))
+
 # Grid and Axis Labels
 # Do not need to call ax.minorticks_on() if the following gets called:
 ax.set_yticks(ticks=major_ticks, labels=[str(i) for i in major_ticks])
 ax.set_yticks(ticks=minor_ticks, labels=[str(i) for i in minor_ticks], minor=True)
 ax.grid(which='minor', ls='--')
 ax.grid(which='major')
-ax.set_xlim(np.min(Re_lam), 2.5e8)
+ax.set_xlim(np.min(Re_lam), 3e8)
 ax.set_ylim(0.007, 0.1)
 fig.legend([ax.lines[0], ax.lines[2], ax.lines[-1]],
            [r'Laminar Flow Line ($f=64/Re$)', r'Relative Roughness Lines ($\epsilon/D$)', r'Transition Line'], ncol=3,
