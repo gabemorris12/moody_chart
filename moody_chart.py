@@ -81,7 +81,7 @@ ax.set_yticks(ticks=major_ticks, labels=[str(i) for i in major_ticks])
 ax.set_yticks(ticks=minor_ticks, labels=[str(i) for i in minor_ticks], minor=True)
 ax.grid(which='minor', ls='--')
 ax.grid(which='major')
-ax.set_xlim(np.min(Re_lam), 3e8)
+ax.set_xlim(np.min(Re_lam), 4e8)
 ax.set_ylim(0.007, 0.1)
 fig.legend([ax.lines[0], ax.lines[2], ax.lines[-1]],
            [r'Laminar Flow Line ($f=64/Re$)', r'Relative Roughness Lines ($\epsilon/D$)', r'Transition Line'], ncol=3,
