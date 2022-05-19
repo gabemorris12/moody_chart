@@ -59,6 +59,12 @@ for r in np.linspace(relative_roughness[1] - relative_roughness[1]/3, relative_r
     f_values.append(1.011*f_T(r))
 ax.plot(Re_trans, f_values, color='darkgrey', ls='-.')
 
+# noinspection PyTypeChecker
+ax.fill(Re_trans + [4500, 4500, max(Re_trans)], f_values + [max(f_values), 0.007, 0.007], facecolor='deepskyblue',
+        alpha=0.1)
+ax.fill(Re_trans + [max(Re_trans), max(Re_trans)], f_values + [max(f_values), min(f_values)], facecolor='#804000',
+        alpha=0.1)
+
 # Make the laminar, critical, and turbulent intervals
 # For more details on annotate: https://matplotlib.org/1.5.3/users/annotations_guide.html
 arrow_style = dict(arrowstyle='<|-|>', connectionstyle='arc3', color=interval_arrows_color, lw=1.5,
@@ -83,8 +89,8 @@ ax.grid(which='minor', ls='--')
 ax.grid(which='major')
 ax.set_xlim(np.min(Re_lam), 4e8)
 ax.set_ylim(0.007, 0.1)
-fig.legend([ax.lines[0], ax.lines[2], ax.lines[-1]],
-           [r'Laminar Flow Line ($f=64/Re$)', r'Relative Roughness Lines ($\epsilon/D$)', r'Transition Line'], ncol=3,
+fig.legend([ax.lines[0], ax.lines[2], ax.lines[-1], ax.patches[0], ax.patches[1]],
+           [r'$f=64/Re$', r'$\epsilon/D$', r'Trans. Line', 'Trans. Turbulent', 'Fully Turbulent'], ncol=5,
            loc='upper center')
 ax.set_ylabel(r'Friction Factor ($f=-\frac{\partial P}{\partial x}\frac{D}{\rho {V}^2/2}$)')
 ax.set_xlabel(r"Reynold's Number ($Re=\frac{\rho VD}{\mu}$)")
