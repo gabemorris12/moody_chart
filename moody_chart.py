@@ -12,6 +12,8 @@ save_pdf = True
 laminar_line_color = 'black'
 relative_roughness_color = 'maroon'
 interval_arrows_color = 'deepskyblue'
+trans_turbulent_color = 'deepskyblue'
+fully_turbulent_color = '#804000'
 
 # Choose which relative roughness lines to plot and the major and minor ticks for the friction factor axis
 relative_roughness = [0, 0.00001, 0.00005, 0.0001, 0.0002, 0.0004, 0.0006, 0.0008, 0.001, 0.002, 0.004, 0.006, 0.008,
@@ -60,10 +62,10 @@ for r in np.linspace(relative_roughness[1] - relative_roughness[1]/3, relative_r
 ax.plot(Re_trans, f_values, color='darkgrey', ls='-.')
 
 # noinspection PyTypeChecker
-ax.fill(Re_trans + [4500, 4500, max(Re_trans)], f_values + [max(f_values), 0.007, 0.007], facecolor='deepskyblue',
-        alpha=0.1)
-ax.fill(Re_trans + [max(Re_trans), max(Re_trans)], f_values + [max(f_values), min(f_values)], facecolor='#804000',
-        alpha=0.1)
+ax.fill(Re_trans + [4500, 4500, max(Re_trans)], f_values + [max(f_values), 0.007, 0.007],
+        facecolor=trans_turbulent_color, alpha=0.1)
+ax.fill(Re_trans + [max(Re_trans), max(Re_trans)], f_values + [max(f_values), min(f_values)],
+        facecolor=fully_turbulent_color, alpha=0.1)
 
 # Make the laminar, critical, and turbulent intervals
 # For more details on annotate: https://matplotlib.org/1.5.3/users/annotations_guide.html
@@ -90,7 +92,7 @@ ax.grid(which='major')
 ax.set_xlim(np.min(Re_lam), 4e8)
 ax.set_ylim(0.007, 0.1)
 fig.legend([ax.lines[0], ax.lines[2], ax.lines[-1], ax.patches[0], ax.patches[1]],
-           [r'$f=64/Re$', r'$\epsilon/D$', r'Trans. Line', 'Trans. Turbulent', 'Fully Turbulent'], ncol=5,
+           [r'$f=64/Re$', r'$\epsilon/D$', r'Transition Line', 'Transitionally Turbulent', 'Fully Turbulent'], ncol=5,
            loc='upper center')
 ax.set_ylabel(r'Friction Factor ($f=-\frac{\partial P}{\partial x}\frac{D}{\rho {V}^2/2}$)')
 ax.set_xlabel(r"Reynold's Number ($Re=\frac{\rho VD}{\mu}$)")
