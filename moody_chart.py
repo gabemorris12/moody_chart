@@ -9,8 +9,8 @@ plt.rcParams['text.usetex'] = True
 
 # Some customization
 save_pdf = True
-laminar_line_color = 'black'
-relative_roughness_color = 'maroon'
+laminar_line_color = 'maroon'
+relative_roughness_color = 'black'
 interval_arrows_color = 'deepskyblue'
 transition_line_color = 'darkgrey'
 trans_turbulent_color = 'deepskyblue'
